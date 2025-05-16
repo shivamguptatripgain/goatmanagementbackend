@@ -44,12 +44,12 @@ const mongoose = require('mongoose');
          'dateOfReceiving',
          'kidsMale',
          'kidsFemale',
-         'initialWeight',
-         'weightAfter2Months',
-         'villageId'
+         'villageId',
+         'husbandName',
+         'dateOfReceiving'
+         
       ];
 
-      // Validate all required fields
       const missingOrEmptyFields = requiredFields.filter(field => {
          const value = req.body[field];
          return typeof value !== "string" || value.trim() === "";
@@ -94,7 +94,6 @@ const getAllEvent = async (req, res) => {
 
 const deleteEvent = async (req, res) => {
    const id = req.params.id;
-
    try {
       if (!id) {
          return sendResponse(res, 400, "ID is required", false);
@@ -145,6 +144,41 @@ const createVillages = async (req, res) => {
       sendResponse(res, 500, "Internal Server Error", false);
    }
 };
+const deleteVillage = async (req, res) => {
+   try {
+      const { id } = req.params;
+
+      const deletedVillage = await Villages.findByIdAndDelete(id);
+
+      if (!deletedVillage) {
+         return sendResponse(res, 404, "Village not found", false);
+      }
+
+      sendResponse(res, 200, "Village deleted successfully", true, deletedVillage);
+   } catch (error) {
+      console.error("Error deleting village:", error);
+      sendResponse(res, 500, "Internal Server Error", false);
+   }
+};
+const updateVillage = async (req, res) => {
+   try {
+      const { id } = req.params;
+
+      const updatedVillage = await Villages.findByIdAndUpdate(id, req.body, {
+         new: true, // return the updated document
+         runValidators: true // ensure model validations run
+      });
+
+      if (!updatedVillage) {
+         return sendResponse(res, 404, "Village not found", false);
+      }
+
+      sendResponse(res, 200, "Village updated successfully", true, updatedVillage);
+   } catch (error) {
+      console.error("Error updating village:", error);
+      sendResponse(res, 500, "Internal Server Error", false);
+   }
+};
 
 
 const getAllVillages= async (req, res) => {
@@ -183,4 +217,4 @@ const updateBeneficiary = async (req, res) => {
 
 
 
-module.exports = { createEvent, getAllEvent, deleteEvent, createVillages, getAllVillages,getBeneficiaryDetailsofParticularVillage,updateBeneficiary }
+module.exports = { createEvent, getAllEvent, deleteEvent, createVillages, getAllVillages,getBeneficiaryDetailsofParticularVillage,updateBeneficiary,deleteVillage,updateVillage };

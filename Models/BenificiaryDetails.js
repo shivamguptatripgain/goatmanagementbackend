@@ -46,6 +46,30 @@ const beneficiaryDetailsSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    husbandName: {
+      type: String,
+      required: false,
+    },
+    dateOfReceiving: {
+      type: Date,
+      required: false,
+    },
+    vaccination: {
+      type: Date,
+      required: false,
+    },
+    deworming: {
+      type: Date,
+      required: false,
+    },
+    camp: {
+      type: Date,
+      required: false,
+    },
+    goat_kid: {
+      type: Date,
+      required: false,
+    }
   },
   { timestamps: true }
 );

@@ -5,7 +5,9 @@ const {
     createVillages, 
     getAllVillages, 
     getBeneficiaryDetailsofParticularVillage,
-    updateBeneficiary
+    updateBeneficiary,
+    deleteVillage,
+    updateVillage
   } = require('../Controllers/event');
   
   const express = require('express');
@@ -21,8 +23,10 @@ const {
   router.post('/create', createEvent);
   router.post('/villages/create', createVillages);
   router.get('/villages', getAllVillages);
-  router.delete('/villages/delete/:id', deleteEvent);
   router.get('/villages/:id', getBeneficiaryDetailsofParticularVillage);
+  router.delete('/villages/delete/:id', deleteVillage);
+router.put('/villages/edit/:id', updateVillage);
+
 
   router.patch('/update-beneficiary/:id', updateBeneficiary);
   
